@@ -5277,12 +5277,12 @@ module.exports = grammar({
     ['program_declaration', '_non_port_program_item'],
 
 
-    // That constuct in a genvar corresponds to the initialization
+    // Treat 'for' snippets as statement instead of loop_generate_construct
     //
     // 'for'  '('  _identifier  •  '='  …
     // 1:  'for'  '('  (genvar_initialization  _identifier  •  '='  constant_expression)  (precedence: 'genvar_initialization')
     // 2:  'for'  '('  (hierarchical_identifier  _identifier)  •  '='  …                  (precedence: 'hierarchical_identifier')
-    ['genvar_initialization', 'hierarchical_identifier'],
+    ['hierarchical_identifier', 'genvar_initialization'],
 
 
     // This is illegal synax, so choose any
