@@ -28181,6 +28181,15 @@
           "name": "_constant_conditional_expression"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_inside_constant_expression"
+          },
+          "named": true,
+          "value": "inside_expression"
+        },
+        {
           "type": "SYMBOL",
           "name": "text_macro_usage"
         }
@@ -28430,6 +28439,35 @@
           {
             "type": "SYMBOL",
             "name": "expression"
+          },
+          {
+            "type": "STRING",
+            "value": "inside"
+          },
+          {
+            "type": "STRING",
+            "value": "{"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "range_list"
+          },
+          {
+            "type": "STRING",
+            "value": "}"
+          }
+        ]
+      }
+    },
+    "_inside_constant_expression": {
+      "type": "PREC_LEFT",
+      "value": 31,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "constant_expression"
           },
           {
             "type": "STRING",

@@ -3843,6 +3843,7 @@ const rules = {
     $._constant_unary_expression,
     $._constant_binary_expression,
     $._constant_conditional_expression,
+    alias($._inside_constant_expression, $.inside_expression), // Out of LRM
     $.text_macro_usage, // Out of LRM
   ),
 
@@ -3898,6 +3899,11 @@ const rules = {
 
   inside_expression: $ => prec.left(PREC.RELATIONAL, seq(
     $.expression, 'inside', '{', $.range_list, '}'
+  )),
+
+  // Out of LRM: supports inside_expression on if_generate_construct
+  _inside_constant_expression: $ => prec.left(PREC.RELATIONAL, seq(
+    $.constant_expression, 'inside', '{', $.range_list, '}'
   )),
 
   mintypmax_expression: $ => prec('mintypmax_expression', seq(
