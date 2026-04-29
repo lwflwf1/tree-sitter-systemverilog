@@ -296,13 +296,13 @@ const rules = {
   ),
 
   module_declaration: $ => prec('module_declaration', choice(
-    seq( // ANSI
+    seq( // nonANSI
       $.module_nonansi_header,
       optional($.timeunits_declaration),
       repeat(alias($._module_item, $.module_item)),
       enclosing('endmodule', $.module_identifier)
     ),
-    seq( // nonANSI
+    seq( // ANSI
       $.module_ansi_header,
       optional($.timeunits_declaration),
       repeat($._non_port_module_item),
