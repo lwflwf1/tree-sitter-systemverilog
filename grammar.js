@@ -4550,7 +4550,7 @@ const rules = {
   ),
 
   text_macro_name: $ => seq(
-    $.text_macro_identifier,
+    $._text_macro_identifier,
     optseq(token.immediate('('), $.list_of_formal_arguments, ')')
   ),
 
@@ -4561,25 +4561,71 @@ const rules = {
     optseq('=', optchoice($.default_text, $.string_literal, $.tf_call, $.text_macro_usage, $.simple_identifier)),
   )),
 
-  text_macro_identifier: $ => reserved('macros', $._identifier),
+  _text_macro_identifier: $ => reserved('macros', alias(token(prec(-1, /[a-zA-Z_][a-zA-Z0-9_$]*/)), $.simple_identifier)),
 
   text_macro_usage: $ => prec.right(seq(
     '`',
-    $.text_macro_identifier,
+    $._text_macro_identifier,
     reserved('macros', optseq('(', optional($.list_of_actual_arguments), ')'))
   )),
 
   list_of_actual_arguments: $ => list_of_args($, 'list_of_arguments', $.actual_argument),
 
+  // Out of LRM: Workaround to support keywords as macro arguments:
+  //
+  // - Same keywords as in module.reserved.globals but excluding directives and the ones
+  //   already present in $.param_expression, $.constraint_block, and $constraint_block_item:
+  //
+  // 'bit', 'byte', 'chandle', 'event', 'int', 'integer', 'logic', 'longint', 'null', 'real',
+  // 'realtime', 'reg', 'shortint', 'shortreal', 'string', 'super', 'this', 'time'
+  _macro_arg_keywords: $ => choice(
+    'accept_on', 'alias', 'always', 'always_comb', 'always_ff', 'always_latch',
+    'and', 'assert', 'assign', 'assume', 'automatic', 'before', 'begin', 'bind',
+    'bins', 'binsof', 'break', 'buf', 'bufif0', 'bufif1', 'case', 'casex',
+    'casez', 'cell', 'checker', 'class', 'clocking', 'cmos', 'config', 'const',
+    'constraint', 'context', 'continue', 'cover', 'covergroup', 'coverpoint',
+    'cross', 'deassign', 'default', 'defparam', 'design', 'disable', 'dist',
+    'do', 'edge', 'else', 'end', 'endcase', 'endchecker', 'endclass',
+    'endclocking', 'endconfig', 'endfunction', 'endgenerate', 'endgroup',
+    'endinterface', 'endmodule', 'endpackage', 'endprimitive', 'endprogram',
+    'endproperty', 'endsequence', 'endspecify', 'endtable', 'endtask', 'enum',
+    'eventually', 'expect', 'export', 'extends', 'extern', 'final',
+    'first_match', 'for', 'force', 'foreach', 'forever', 'fork', 'forkjoin',
+    'function', 'generate', 'genvar', 'global', 'highz0', 'highz1', 'if', 'iff',
+    'ifnone', 'ignore_bins', 'illegal_bins', 'implements', 'implies', 'import',
+    'incdir', 'include', 'initial', 'inout', 'input', 'inside', 'instance',
+    'interconnect', 'interface', 'intersect', 'join', 'join_any', 'join_none',
+    'large', 'let', 'liblist', 'library', 'local', 'localparam', 'macromodule',
+    'matches', 'medium', 'modport', 'module', 'nand', 'negedge', 'nettype',
+    'new', 'nexttime', 'nmos', 'nor', 'noshowcancelled', 'not', 'notif0',
+    'notif1', 'or', 'output', 'package', 'packed', 'parameter', 'pmos',
+    'posedge', 'primitive', 'priority', 'program', 'property', 'protected',
+    'pull0', 'pull1', 'pulldown', 'pullup', 'pulsestyle_ondetect',
+    'pulsestyle_onevent', 'pure', 'rand', 'randc', 'randcase', 'randsequence',
+    'rcmos', 'ref', 'reject_on', 'release', 'repeat', 'restrict', 'return',
+    'rnmos', 'rpmos', 'rtran', 'rtranif0', 'rtranif1', 's_always',
+    's_eventually', 's_nexttime', 's_until', 's_until_with', 'scalared',
+    'sequence', 'showcancelled', 'signed', 'small', 'soft', 'solve', 'specify',
+    'specparam', 'static', 'strong', 'strong0', 'strong1', 'struct', 'supply0',
+    'supply1', 'sync_accept_on', 'sync_reject_on', 'table', 'tagged', 'task',
+    'throughout', 'timeprecision', 'timeunit', 'tran', 'tranif0', 'tranif1',
+    'tri', 'tri0', 'tri1', 'triand', 'trior', 'trireg', 'type', 'typedef',
+    'union', 'unique', 'unique0', 'unsigned', 'until', 'until_with', 'untyped',
+    'use', 'uwire', 'var', 'vectored', 'virtual', 'void', 'wait', 'wait_order',
+    'wand', 'weak', 'weak0', 'weak1', 'while', 'wildcard', 'wire', 'with',
+    'within', 'wor', 'xnor', 'xor'
+  ),
+
   actual_argument: $ => choice(
-    // Out of LRM, needed to support parameterized data types and constraints as macro args (common in the UVM)
+    // Out of LRM, needed to support parameterized data types, constraints and keywords as macro args (common in the UVM)
     $.param_expression, // e.g: `uvm_component_utils_param
     $.constraint_block, // e.g: `uvm_do_with
     repseq1($.constraint_block_item, optional(';')),
+    $._macro_arg_keywords,
     ';'
   ),
 
-  undefine_compiler_directive: $ => seq('`undef', $.text_macro_identifier),
+  undefine_compiler_directive: $ => seq('`undef', $._text_macro_identifier),
 
   undefineall_compiler_directive: $ => '`undefineall',
 
@@ -4599,12 +4645,12 @@ const rules = {
   ),
 
   ifdef_condition: $ => choice(
-    $.text_macro_identifier,
+    $._text_macro_identifier,
     seq('(', $.ifdef_macro_expression, ')')
   ),
 
   ifdef_macro_expression: $ => choice(
-    $.text_macro_identifier,
+    $._text_macro_identifier,
     binary_expr($, BINARY_MACRO_OP_TABLE, $.ifdef_macro_expression),
     unary_expr($, '!', $.ifdef_macro_expression),
     paren_expr($.ifdef_macro_expression),
@@ -4780,6 +4826,7 @@ module.exports = grammar({
 // ** Inline
   inline: $ => [
     $.snippets,
+    $._macro_arg_keywords,
 
     $.var_data_type,
     $.elaboration_severity_system_task,
@@ -4876,7 +4923,7 @@ module.exports = grammar({
     $.input_identifier,
     $.output_identifier,
     // $.edge_identifier, // Don't inline
-    $.text_macro_identifier,
+    // $._text_macro_identifier, // De-inline to support keywords in macros
 
     // Specify expressions
     $.t_path_delay_expression,

@@ -6597,10 +6597,6 @@
       "required": true,
       "types": [
         {
-          "type": "escaped_identifier",
-          "named": true
-        },
-        {
           "type": "ifdef_macro_expression",
           "named": true
         },
@@ -6678,10 +6674,6 @@
       "types": [
         {
           "type": "attribute_instance",
-          "named": true
-        },
-        {
-          "type": "escaped_identifier",
           "named": true
         },
         {
@@ -15352,10 +15344,6 @@
       "required": true,
       "types": [
         {
-          "type": "escaped_identifier",
-          "named": true
-        },
-        {
           "type": "list_of_formal_arguments",
           "named": true
         },
@@ -15374,10 +15362,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "escaped_identifier",
-          "named": true
-        },
         {
           "type": "list_of_actual_arguments",
           "named": true
@@ -16313,10 +16297,6 @@
       "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "escaped_identifier",
-          "named": true
-        },
         {
           "type": "simple_identifier",
           "named": true
