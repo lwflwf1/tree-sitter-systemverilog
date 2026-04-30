@@ -47,8 +47,8 @@ EXPECTED_FAIL_FILELIST=(core/subroutines/call_method_cond_expr_rhs_assignment_ER
                         doulos/69.2_name.sv
                         doulos/73.3_number.sv
                         doulos/116.1_begin_keywords.sv
-                        github/issue_62_a.sv
-                        github/issue_62_b.sv
+                        github/issue_62_a.sv github/issue_62_b.sv
+                        github/issue_63_a.sv github/issue_63_b.sv
                         # TODO:
                         # sv-tests/chapter-22/22.3--resetall_illegal.sv
                        )

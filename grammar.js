@@ -4549,6 +4549,8 @@ const rules = {
     token.immediate(/\r?\n/),
   ),
 
+  // LRM 22.5.1: If formal arguments are used, the list of formal argument names shall be enclosed in
+  //             parentheses immediately following the name of the macro.
   text_macro_name: $ => seq(
     $._text_macro_identifier,
     optseq(token.immediate('('), $.list_of_formal_arguments, ')')
@@ -4563,9 +4565,11 @@ const rules = {
 
   _text_macro_identifier: $ => reserved('macros', alias(token(prec(-1, /[a-zA-Z_][a-zA-Z0-9_$]*/)), $.simple_identifier)),
 
+  // LRM 22.5.1: White space shall be allowed between the text macro name and the left parenthesis in the macro usage.
+  //             If the text macro name is an escaped identifier, then white space shall be required.
   text_macro_usage: $ => prec.right(seq(
     '`',
-    $._text_macro_identifier,
+    reserved('macros', alias(token.immediate(prec(-1, /[a-zA-Z_][a-zA-Z0-9_$]*/)), $.simple_identifier)),
     reserved('macros', optseq('(', optional($.list_of_actual_arguments), ')'))
   )),
 
