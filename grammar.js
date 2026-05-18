@@ -3645,7 +3645,7 @@ const rules = {
   ),
 
   multiple_concatenation: $ => seq(
-    '{', $.expression, $.concatenation, '}'
+    '{', $.constant_expression, $.concatenation, '}'
   ),
 
   streaming_concatenation: $ => seq(
