@@ -26282,7 +26282,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression"
+          "name": "constant_expression"
         },
         {
           "type": "SYMBOL",
@@ -37723,10 +37723,6 @@
     [
       "scalar_timing_check_condition",
       "mintypmax_expression"
-    ],
-    [
-      "constant_function_call",
-      "module_path_primary"
     ],
     [
       "_property_actual_arg",
