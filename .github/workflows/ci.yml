@@ -24,7 +24,7 @@ jobs:
       - name: Setup tree-sitter
         uses: tree-sitter/setup-action@v2
         with:
-          tree-sitter-ref: v0.25.10
+          tree-sitter-ref: v0.26.9
 
       - name: Generate parser
         run: |
