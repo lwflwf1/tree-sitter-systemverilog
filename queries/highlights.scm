@@ -68,6 +68,7 @@
   "do"
   "genvar"
   "inside"
+  "dist"
   "rand"
   "continue"
   "randc"
