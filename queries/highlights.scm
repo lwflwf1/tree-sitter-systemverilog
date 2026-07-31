@@ -374,6 +374,8 @@ port_name: (simple_identifier) @variable
   "std"
 ] @function.builtin
 
+"null" @constant.builtin
+
 ; declaration
 (task_body_declaration
   (class_scope
