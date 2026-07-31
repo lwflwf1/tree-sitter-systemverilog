@@ -927,7 +927,8 @@ const rules = {
 
   constraint_block_item: $ => choice(
     seq('solve', $.solve_before_list, 'before', $.solve_before_list, ';'),
-    $.constraint_expression
+    $.constraint_expression,
+    $._directives // Out of LRM
   ),
 
   solve_before_list: $ => commaSep1($.constraint_primary),
@@ -1248,7 +1249,11 @@ const rules = {
     optseq('=', $.constant_expression)
   ),
 
-  class_scope: $ => seq($.class_type, '::'),
+  class_scope: $ => seq(
+    $.ps_class_identifier,
+    optional($.parameter_value_assignment),
+    '::'
+  ),
 
   class_type: $ => prec('class_type', seq(
     $.ps_class_identifier, optional($.parameter_value_assignment),
@@ -3705,10 +3710,9 @@ const rules = {
 
   list_of_arguments: $ => list_of_args($, 'list_of_arguments', $.expression),
 
-  method_call: $ => seq(
-    $._method_call_root,
-    choice('.', '::'), // :: Out of LRM: Needed to support static method calls
-    $.method_call_body
+  method_call: $ => choice(
+    seq($._method_call_root, '.', $.method_call_body),
+    seq($._method_call_root, '::', $.static_method_call_body)
   ),
 
   method_call_body: $ => prec.right(choice(
@@ -3719,6 +3723,12 @@ const rules = {
     ),
     prec.dynamic(1, $._built_in_method_call)
   )),
+
+  static_method_call_body: $ => seq(
+    field('name', $.method_identifier),
+    repeat($.attribute_instance),
+    field('arguments', seq('(', optional($.list_of_arguments), ')'))
+  ),
 
   _built_in_method_call: $ => choice(
     $.array_manipulation_call,
@@ -4359,7 +4369,7 @@ const rules = {
       choice($._identifier, $.text_macro_usage), // Slightly out of LRM to support use of $.text_macro_usage as part of hierarchical identifiers
       optional($.constant_bit_select),
       '.'))) ,
-    $._identifier
+    field('name', $._identifier)
   )),
 
   hierarchical_net_identifier: $ => $.hierarchical_identifier,
@@ -5577,7 +5587,6 @@ module.exports = grammar({
     ['sequence_list_of_arguments'],
   ],
 
-
 // ** Conflicts
   conflicts: $ => [
     // Help differentiate between many parameters and list of parameters:
@@ -5745,6 +5754,9 @@ module.exports = grammar({
     // 2:  (class_type  _identifier)  •  '::'  …
     // 3:  (package_scope  _identifier  •  '::')             (precedence: 'package_scope')
     [$.class_type, $.package_scope],
+    [$.class_scope, $.class_type],
+    [$.class_scope, $.package_scope],
+    [$.class_scope, $.class_type, $.package_scope],
 
 
     // It's not possible to know after class declaration if 'virtual' belongs to a virtual interface or a virtual method
@@ -6016,6 +6028,7 @@ module.exports = grammar({
     // 1:  'ref'  (class_type  _identifier)  •  '\'  …  (precedence: 'class_type')
     // 2:  'ref'  (data_type  _identifier)  •  '\'  …   (precedence: 'data_type')
     [$.data_type, $.class_type],
+    [$.data_type, $.class_scope, $.class_type],
 
 
     // Didn't test but makes sense to leave the conflict to avoid errors
@@ -6046,7 +6059,10 @@ module.exports = grammar({
     // Support for static method calls
     [$.class_type, $.tf_call, $.hierarchical_identifier, $.package_scope],
     [$.class_type, $.tf_call, $.hierarchical_identifier],
+    [$.class_scope, $.class_type, $.tf_call, $.hierarchical_identifier],
+    [$.class_scope, $.class_type, $.tf_call, $.hierarchical_identifier, $.package_scope],
     [$._incomplete_class_scoped_type, $.class_type, $.tf_call, $.hierarchical_identifier, $.package_scope],
+    [$.class_scope, $._incomplete_class_scoped_type, $.class_type, $.tf_call, $.hierarchical_identifier, $.package_scope],
     [$.class_scope, $._method_call_root],
 
 
@@ -6196,6 +6212,10 @@ module.exports = grammar({
     // Allow text_macro_usage on LHS of blocking and non-blocking assignments (on $.variable_lvalue)
     [$.variable_lvalue, $._directives],
     [$.expression, $.variable_lvalue],
+    [$.expression, $._directives],
+    [$.constant_expression, $._directives],
+    [$.expression, $.variable_lvalue, $._directives],
+    [$.constant_expression, $.expression, $._directives],
     [$.constant_expression, $.expression, $.variable_lvalue],
 
 
