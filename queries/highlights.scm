@@ -561,6 +561,15 @@ c_name: (c_identifier) @function
   (class_scope
     (simple_identifier) @constructor))
 
+; class name in out-of-class task/function definitions
+(task_body_declaration
+  (class_scope
+    (simple_identifier) @constructor))
+
+(function_body_declaration
+  (class_scope
+    (simple_identifier) @constructor))
+
 (task_prototype
   name: (simple_identifier) @function)
 
