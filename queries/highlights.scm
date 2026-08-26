@@ -316,6 +316,9 @@ port_name: (simple_identifier) @variable
 ; randomize variable list
 (variable_identifier_list
   (simple_identifier) @variable)
+(variable_identifier_list
+  (hierarchical_variable_identifier
+    (simple_identifier) @variable))
 
 ; array index/select variable
 (constant_primary

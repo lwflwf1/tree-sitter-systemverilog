@@ -3764,7 +3764,24 @@ const rules = {
     optseq('with', optseq('(', optional($.identifier_list), ')'), $.constraint_block)
   )),
 
-  variable_identifier_list: $ => commaSep1($.variable_identifier),
+  variable_identifier_list: $ => commaSep1(choice(
+    $.variable_identifier,
+    $.hierarchical_variable_identifier,
+  )),
+
+  // Out of LRM: std::randomize() accepts hierarchical variable references with
+  // bit-selects, e.g. std::randomize(top.regs[i].value) (IEEE 1800 18.7 notes
+  // hierarchical names). A bare identifier keeps matching $.variable_identifier
+  // so existing tree shapes and highlight queries are unaffected; this rule only
+  // fires when the argument carries at least one '.' segment or '[' select.
+  hierarchical_variable_identifier: $ => choice(
+    seq($.variable_identifier, $.bit_select),
+    seq(
+      $.variable_identifier,
+      repeat1(seq('.', $._identifier, optional($.bit_select))),
+      optional($.bit_select),
+    ),
+  ),
 
   identifier_list: $ => commaSep1($._identifier),
 
@@ -5657,6 +5674,10 @@ module.exports = grammar({
     //   1:  module_nonansi_header  'initial'  (hierarchical_identifier  _identifier)  •  '.'  …       (precedence: 'hierarchical_identifier')
     //   2:  module_nonansi_header  'initial'  (hierarchical_identifier_repeat1  _identifier  •  '.')  (precedence: 'hierarchical_identifier')
     [$.hierarchical_identifier],
+    // std::randomize()'s variable_identifier_list allows hierarchical names with
+    // dot-selects and bit-selects (IEEE 1800 18.7), causing an LR conflict with
+    // hierarchical_identifier at _identifier  ','.
+    [$.hierarchical_identifier, $.variable_identifier_list],
 
 
     // From the LRM:

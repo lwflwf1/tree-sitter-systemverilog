@@ -27548,8 +27548,17 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "variable_identifier"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "variable_identifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "hierarchical_variable_identifier"
+            }
+          ]
         },
         {
           "type": "REPEAT",
@@ -27561,13 +27570,26 @@
                 "value": ","
               },
               {
-                "type": "SYMBOL",
-                "name": "variable_identifier"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "variable_identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "hierarchical_variable_identifier"
+                  }
+                ]
               }
             ]
           }
         }
       ]
+    },
+    "hierarchical_variable_identifier": {
+      "type": "SYMBOL",
+      "name": "hierarchical_identifier"
     },
     "identifier_list": {
       "type": "SEQ",
@@ -34135,10 +34157,6 @@
       "type": "SYMBOL",
       "name": "hierarchical_identifier"
     },
-    "hierarchical_variable_identifier": {
-      "type": "SYMBOL",
-      "name": "hierarchical_identifier"
-    },
     "_identifier": {
       "type": "CHOICE",
       "members": [
@@ -37190,6 +37208,10 @@
     ],
     [
       "hierarchical_identifier"
+    ],
+    [
+      "hierarchical_identifier",
+      "variable_identifier_list"
     ],
     [
       "variable_port_type"
