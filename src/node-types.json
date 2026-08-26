@@ -1517,10 +1517,6 @@
           "named": true
         },
         {
-          "type": "constant_mintypmax_expression",
-          "named": true
-        },
-        {
           "type": "escaped_identifier",
           "named": true
         },

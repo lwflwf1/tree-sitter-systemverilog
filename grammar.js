@@ -1184,7 +1184,11 @@ const rules = {
   casting_type: $ => choice(
     $._simple_type,
     $.integral_number,                              // $.constant_primary branch
-    seq('(', $.constant_mintypmax_expression, ')'), // $.constant_primary branch
+    // FIX(cast-paren): removed seq('(', $.constant_mintypmax_expression, ')').
+    // This branch let `(a[i] == pkg::X)` be swallowed as a casting_type during
+    // GLR recovery (ERROR instead of a clean expression parse). Legit casts of
+    // this shape are vanishingly rare; type_reference/integral/simple_type
+    // still cover the realistic casting_type forms.
     $.type_reference,                               // $.constant_primary branch
     $._signing,
     'string',
