@@ -3929,12 +3929,18 @@ const rules = {
   )),
 
   inside_expression: $ => prec.left(PREC.RELATIONAL, seq(
-    $.expression, 'inside', '{', $.range_list, '}'
+    $.expression, 'inside', choice(
+      seq('{', $.range_list, '}'),
+      $.expression
+    )
   )),
 
   // Out of LRM: supports inside_expression on if_generate_construct
   _inside_constant_expression: $ => prec.left(PREC.RELATIONAL, seq(
-    $.constant_expression, 'inside', '{', $.range_list, '}'
+    $.constant_expression, 'inside', choice(
+      seq('{', $.range_list, '}'),
+      $.constant_expression
+    )
   )),
 
   mintypmax_expression: $ => prec('mintypmax_expression', seq(
@@ -5617,6 +5623,9 @@ module.exports = grammar({
     //   2:  module_keyword  module_identifier  '#'  '('  (list_of_param_assignments  param_assignment)  •  ','  …
     [$.list_of_param_assignments],
 
+    // genvar_iteration vs hierarchical_identifier in for loop increment
+    [$.genvar_iteration, $.hierarchical_identifier],
+
 
     // Help differentiate between many types and list of types:
     //
@@ -5624,6 +5633,11 @@ module.exports = grammar({
     //   1:  module_keyword  module_identifier  '#'  '('  'type'  (list_of_type_assignments  type_assignment  •  list_of_type_assignments_repeat1)
     //   2:  module_keyword  module_identifier  '#'  '('  'type'  (list_of_type_assignments  type_assignment)  •  ','  …
     [$.list_of_type_assignments],
+
+
+    // inside_expression with optional braces: {expression, ...} could be
+    // a range_list (value_range) or a concatenation
+    [$.value_range, $.concatenation],
 
 
     // Differentiate between nonANSI/ANSI header for empty port list with parenthesis:
