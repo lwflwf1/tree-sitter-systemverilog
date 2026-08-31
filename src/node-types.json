@@ -1181,6 +1181,10 @@
       "required": true,
       "types": [
         {
+          "type": "constant_range",
+          "named": true
+        },
+        {
           "type": "expression",
           "named": true
         }
@@ -1514,6 +1518,10 @@
       "types": [
         {
           "type": "class_scope",
+          "named": true
+        },
+        {
+          "type": "constant_mintypmax_expression",
           "named": true
         },
         {
@@ -2240,23 +2248,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": false,
+      "multiple": false,
+      "required": true,
       "types": [
         {
-          "type": "escaped_identifier",
-          "named": true
-        },
-        {
-          "type": "package_scope",
-          "named": true
-        },
-        {
-          "type": "parameter_value_assignment",
-          "named": true
-        },
-        {
-          "type": "simple_identifier",
+          "type": "class_type",
           "named": true
         }
       ]
@@ -6583,25 +6579,10 @@
   {
     "type": "hierarchical_identifier",
     "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "escaped_identifier",
-            "named": true
-          },
-          {
-            "type": "simple_identifier",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "constant_bit_select",

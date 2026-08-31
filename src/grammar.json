@@ -6799,6 +6799,23 @@
           "name": "integral_number"
         },
         {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "SYMBOL",
+              "name": "constant_mintypmax_expression"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
           "name": "type_reference"
         },
@@ -7349,19 +7366,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "ps_class_identifier"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "parameter_value_assignment"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "name": "class_type"
         },
         {
           "type": "STRING",
@@ -27136,6 +27141,55 @@
         }
       ]
     },
+    "static_method_call_body": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "method_identifier"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "attribute_instance"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "arguments",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "("
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "list_of_arguments"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "STRING",
+                "value": ")"
+              }
+            ]
+          }
+        }
+      ]
+    },
     "method_call_body": {
       "type": "PREC_RIGHT",
       "value": 0,
@@ -27209,55 +27263,6 @@
           }
         ]
       }
-    },
-    "static_method_call_body": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "method_identifier"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "attribute_instance"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "arguments",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "("
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "list_of_arguments"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              },
-              {
-                "type": "STRING",
-                "value": ")"
-              }
-            ]
-          }
-        }
-      ]
     },
     "_built_in_method_call": {
       "type": "CHOICE",
@@ -32207,19 +32212,41 @@
     "bit_select": {
       "type": "REPEAT1",
       "content": {
-        "type": "SEQ",
+        "type": "CHOICE",
         "members": [
           {
-            "type": "STRING",
-            "value": "["
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "["
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              },
+              {
+                "type": "STRING",
+                "value": "]"
+              }
+            ]
           },
           {
-            "type": "SYMBOL",
-            "name": "expression"
-          },
-          {
-            "type": "STRING",
-            "value": "]"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "["
+              },
+              {
+                "type": "SYMBOL",
+                "name": "constant_range"
+              },
+              {
+                "type": "STRING",
+                "value": "]"
+              }
+            ]
           }
         ]
       }
@@ -34123,12 +34150,8 @@
             }
           },
           {
-            "type": "FIELD",
-            "name": "name",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_identifier"
-            }
+            "type": "SYMBOL",
+            "name": "_identifier"
           }
         ]
       }
@@ -37253,19 +37276,6 @@
       "package_scope"
     ],
     [
-      "class_scope",
-      "class_type"
-    ],
-    [
-      "class_scope",
-      "package_scope"
-    ],
-    [
-      "class_scope",
-      "class_type",
-      "package_scope"
-    ],
-    [
       "_property_qualifier",
       "method_qualifier"
     ],
@@ -37389,11 +37399,6 @@
     ],
     [
       "data_type",
-      "class_scope",
-      "class_type"
-    ],
-    [
-      "data_type",
       "class_type",
       "tf_call",
       "hierarchical_identifier"
@@ -37437,26 +37442,9 @@
     ],
     [
       "class_scope",
-      "class_type",
-      "tf_call",
-      "hierarchical_identifier"
+      "_method_call_root"
     ],
     [
-      "class_scope",
-      "class_type",
-      "tf_call",
-      "hierarchical_identifier",
-      "package_scope"
-    ],
-    [
-      "_incomplete_class_scoped_type",
-      "class_type",
-      "tf_call",
-      "hierarchical_identifier",
-      "package_scope"
-    ],
-    [
-      "class_scope",
       "_incomplete_class_scoped_type",
       "class_type",
       "tf_call",
@@ -37916,30 +37904,39 @@
       "empty_unpacked_array_concatenation"
     ],
     [
+      "expression",
+      "_directives"
+    ],
+    [
+      "constant_expression",
+      "_directives"
+    ],
+    [
+      "constant_expression",
+      "expression",
+      "_directives"
+    ],
+    [
+      "expression",
+      "variable_lvalue",
+      "_directives"
+    ],
+    [
+      "_part_select_range",
+      "bit_select"
+    ],
+    [
+      "_constant_part_select_range",
+      "_part_select_range",
+      "bit_select"
+    ],
+    [
       "variable_lvalue",
       "_directives"
     ],
     [
       "expression",
       "variable_lvalue"
-    ],
-    [
-      "expression",
-      "_directives"
-    ],
-    [
-      "constant_expression",
-      "_directives"
-    ],
-    [
-      "expression",
-      "variable_lvalue",
-      "_directives"
-    ],
-    [
-      "constant_expression",
-      "expression",
-      "_directives"
     ],
     [
       "constant_expression",

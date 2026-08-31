@@ -927,7 +927,8 @@ const rules = {
 
   constraint_block_item: $ => choice(
     seq('solve', $.solve_before_list, 'before', $.solve_before_list, ';'),
-    $.constraint_expression
+    $.constraint_expression,
+    $._directives // Out of LRM
   ),
 
   solve_before_list: $ => commaSep1($.constraint_primary),
@@ -3705,10 +3706,15 @@ const rules = {
 
   list_of_arguments: $ => list_of_args($, 'list_of_arguments', $.expression),
 
-  method_call: $ => seq(
-    $._method_call_root,
-    choice('.', '::'), // :: Out of LRM: Needed to support static method calls
-    $.method_call_body
+  method_call: $ => choice(
+    seq($._method_call_root, '.', $.method_call_body),
+    seq($._method_call_root, '::', $.static_method_call_body)
+  ),
+
+  static_method_call_body: $ => seq(
+    field('name', $.method_identifier),
+    repeat($.attribute_instance),
+    field('arguments', seq('(', optional($.list_of_arguments), ')'))
   ),
 
   method_call_body: $ => prec.right(choice(
@@ -4068,7 +4074,10 @@ const rules = {
 
   // Modified to avoid matching empty string
   bit_select: $ => repeat1(
-    seq('[', $.expression, ']')
+    choice(
+      seq('[', $.expression, ']'),
+      seq('[', $.constant_range, ']') // Out of LRM: allow constant_range in bit_select (e.g. [pkg::CONSTANT-1:0])
+    )
   ),
 
   // Modified to avoid matching empty string
@@ -6067,6 +6076,7 @@ module.exports = grammar({
     // Support for static method calls
     [$.class_type, $.tf_call, $.hierarchical_identifier, $.package_scope],
     [$.class_type, $.tf_call, $.hierarchical_identifier],
+    [$.class_scope, $._method_call_root],
     [$._incomplete_class_scoped_type, $.class_type, $.tf_call, $.hierarchical_identifier, $.package_scope],
     [$.class_scope, $._method_call_root],
 
@@ -6212,6 +6222,14 @@ module.exports = grammar({
 
     // Allow constraint blocks on text_macro_usage
     [$.constraint_block, $.empty_unpacked_array_concatenation],
+    // Allow _directives inside constraint_block_item
+    [$.expression, $._directives],
+    [$.constant_expression, $._directives],
+    [$.constant_expression, $.expression, $._directives],
+    [$.expression, $.variable_lvalue, $._directives],
+    // Allow constant_range in bit_select
+    [$._part_select_range, $.bit_select],
+    [$._constant_part_select_range, $._part_select_range, $.bit_select],
 
 
     // Allow text_macro_usage on LHS of blocking and non-blocking assignments (on $.variable_lvalue)
