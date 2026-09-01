@@ -316,9 +316,6 @@ port_name: (simple_identifier) @variable
 ; randomize variable list
 (variable_identifier_list
   (simple_identifier) @variable)
-(variable_identifier_list
-  (hierarchical_identifier
-    (simple_identifier) @variable))
 
 ; array index/select variable
 (constant_primary
@@ -381,10 +378,6 @@ port_name: (simple_identifier) @variable
 "null" @constant.builtin
 
 ; declaration
-(task_body_declaration
-  name: (simple_identifier) @function
-  (simple_identifier)? @label)
-
 (task_body_declaration
   .
   name: (simple_identifier) @function
@@ -572,17 +565,6 @@ c_name: (c_identifier) @function
     (class_type
       (simple_identifier) @constructor)))
 
-; class name in out-of-class task/function definitions
-(task_body_declaration
-  (class_scope
-    (class_type
-      (simple_identifier) @constructor)))
-
-(function_body_declaration
-  (class_scope
-    (class_type
-      (simple_identifier) @constructor)))
-
 (task_prototype
   name: (simple_identifier) @function)
 
@@ -607,6 +589,11 @@ c_name: (c_identifier) @function
 
 (constraint_declaration
   (simple_identifier) @constructor)
+
+(method_call
+  (primary
+    (hierarchical_identifier
+      (simple_identifier) @constructor)))
 
 (string_literal
   (quoted_string) @string)
