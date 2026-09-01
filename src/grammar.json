@@ -5309,8 +5309,17 @@
               {
                 "type": "REPEAT",
                 "content": {
-                  "type": "SYMBOL",
-                  "name": "constraint_expression"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "constraint_expression"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_directives"
+                    }
+                  ]
                 }
               },
               {
