@@ -382,8 +382,6 @@ port_name: (simple_identifier) @variable
 
 ; declaration
 (task_body_declaration
-  (class_scope
-    (simple_identifier))
   name: (simple_identifier) @function
   (simple_identifier)? @label)
 
@@ -571,16 +569,19 @@ c_name: (c_identifier) @function
 
 (data_type
   (class_scope
-    (simple_identifier) @constructor))
+    (class_type
+      (simple_identifier) @constructor)))
 
 ; class name in out-of-class task/function definitions
 (task_body_declaration
   (class_scope
-    (simple_identifier) @constructor))
+    (class_type
+      (simple_identifier) @constructor)))
 
 (function_body_declaration
   (class_scope
-    (simple_identifier) @constructor))
+    (class_type
+      (simple_identifier) @constructor)))
 
 (task_prototype
   name: (simple_identifier) @function)
