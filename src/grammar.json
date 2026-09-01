@@ -4250,6 +4250,22 @@
         {
           "type": "SYMBOL",
           "name": "_directives"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "attribute_instance"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "statement"
+            }
+          ]
         }
       ]
     },
@@ -5293,51 +5309,13 @@
               {
                 "type": "REPEAT",
                 "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "constraint_expression"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_directives"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "constraint_expression"
                 }
               },
               {
                 "type": "STRING",
                 "value": "}"
-              }
-            ]
-          },
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "begin"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "constraint_expression"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_directives"
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "STRING",
-                "value": "end"
               }
             ]
           }
@@ -5465,18 +5443,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "TOKEN",
-              "content": {
-                "type": "STRING",
-                "value": ":="
-              }
+              "type": "STRING",
+              "value": ":="
             },
             {
-              "type": "TOKEN",
-              "content": {
-                "type": "STRING",
-                "value": ":/"
-              }
+              "type": "STRING",
+              "value": ":/"
             }
           ]
         },
@@ -38007,6 +37979,13 @@
       "data_type",
       "constant_primary",
       "hierarchical_identifier"
+    ],
+    [
+      "class_item",
+      "statement_item"
+    ],
+    [
+      "statement"
     ]
   ],
   "precedences": [

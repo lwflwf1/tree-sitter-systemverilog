@@ -832,6 +832,7 @@ const rules = {
     $.parameter_declaration,
     ';',
     $._directives, // Out of LRM
+    seq(repeat($.attribute_instance), $.statement), // Out of LRM: allow statements in class body
   ),
 
   class_property: $ => prec('class_property', choice(
@@ -955,8 +956,7 @@ const rules = {
 
   constraint_set: $ => prec('constraint_set', choice(
     $.constraint_expression,
-    seq('{', repeat(choice($.constraint_expression, $._directives)), '}'),
-    seq('begin', repeat(choice($.constraint_expression, $._directives)), 'end')
+    seq('{', repeat($.constraint_expression), '}')
   )),
 
   expression_or_dist: $ => prec('expression_or_dist', seq(
@@ -971,7 +971,7 @@ const rules = {
     seq('default', ':/', $.expression)
   ),
 
-  dist_weight: $ => seq(choice(token(':='), token(':/')), $.expression),
+  dist_weight: $ => seq(choice(':=', ':/'), $.expression),
 
   constraint_prototype: $ => seq(
     optional($.constraint_prototype_qualifier),
@@ -6251,6 +6251,10 @@ module.exports = grammar({
     [$.constant_primary, $.hierarchical_identifier],
     [$.constant_primary, $.net_lvalue, $.hierarchical_identifier],
     [$.data_type, $.constant_primary, $.hierarchical_identifier],
+
+    // Allow statements in class body (macro-generated code like for loops inside uvm_object_utils_begin)
+    [$.class_item, $.statement_item],
+    [$.statement],
 
   ],
 
