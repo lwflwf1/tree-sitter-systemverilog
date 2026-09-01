@@ -955,7 +955,8 @@ const rules = {
 
   constraint_set: $ => prec('constraint_set', choice(
     $.constraint_expression,
-    seq('{', repeat($.constraint_expression), '}')
+    seq('{', repeat(choice($.constraint_expression, $._directives)), '}'),
+    seq('begin', repeat(choice($.constraint_expression, $._directives)), 'end')
   )),
 
   expression_or_dist: $ => prec('expression_or_dist', seq(
@@ -970,7 +971,7 @@ const rules = {
     seq('default', ':/', $.expression)
   ),
 
-  dist_weight: $ => seq(choice(':=', ':/'), $.expression),
+  dist_weight: $ => seq(choice(token(':='), token(':/')), $.expression),
 
   constraint_prototype: $ => seq(
     optional($.constraint_prototype_qualifier),
