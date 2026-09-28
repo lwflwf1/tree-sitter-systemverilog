@@ -3904,7 +3904,7 @@ const rules = {
     $.constant_expression, choice('+:', '-:'), $.constant_expression
   ),
 
-  expression: $ => choice(
+  expression: $ => prec('expression', choice(
     $.primary,
     $._unary_expression,
     $.inc_or_dec_expression,
@@ -3915,7 +3915,7 @@ const rules = {
     $.tagged_union_expression,
     $.text_macro_usage,               // Out of LRM
     $.file_or_line_compiler_directive // Out of LRM
-  ),
+  )),
 
   tagged_union_expression: $ => prec.right(seq(
     'tagged', $.member_identifier, optional($.primary)
@@ -4531,6 +4531,7 @@ const rules = {
     $.timescale_compiler_directive,
     $.default_nettype_compiler_directive,
     $.unconnected_drive_compiler_directive,
+    $.nounconnected_drive_compiler_directive,
     $.celldefine_compiler_directive,
     $.endcelldefine_compiler_directive,
     $.pragma,
@@ -4573,7 +4574,7 @@ const rules = {
     '`define',
     $.text_macro_name,
     optional($.macro_text),
-    token.immediate(/\r?\n/),
+    token.immediate(/[ \t]*\r?\n/),
   ),
 
   // LRM 22.5.1: If formal arguments are used, the list of formal argument names shall be enclosed in
@@ -4715,6 +4716,7 @@ const rules = {
     choice('pull0', 'pull1'),
     token.immediate(/\r?\n/),
   ),
+  nounconnected_drive_compiler_directive: $ => '`nounconnected_drive',
 
 
 // ** 22.10 `celldefine and `endcelldefine
@@ -5599,6 +5601,12 @@ module.exports = grammar({
     ['_simple_type', 'hierarchical_identifier'],
 
 
+    // Allow conditional compilation on constraint blocks (#67)
+    // 1:  'randomize'  'with'  '{'  (_directives  text_macro_usage)  •  '-'  …  (precedence: '_directives')
+    // 2:  'randomize'  'with'  '{'  (expression  text_macro_usage)  •  '-'  …
+    ['expression', '_directives'],
+
+
     // Leave these two standalone to avoid having to replicate code with function 'list_of_args'
     ['property_list_of_arguments'],
     ['sequence_list_of_arguments'],
@@ -6077,7 +6085,6 @@ module.exports = grammar({
     // Support for static method calls
     [$.class_type, $.tf_call, $.hierarchical_identifier, $.package_scope],
     [$.class_type, $.tf_call, $.hierarchical_identifier],
-    [$.class_scope, $._method_call_root],
     [$._incomplete_class_scoped_type, $.class_type, $.tf_call, $.hierarchical_identifier, $.package_scope],
     [$.class_scope, $._method_call_root],
 
@@ -6224,7 +6231,7 @@ module.exports = grammar({
     // Allow constraint blocks on text_macro_usage
     [$.constraint_block, $.empty_unpacked_array_concatenation],
     // Allow _directives inside constraint_block_item
-    [$.expression, $._directives],
+    // ([expression, _directives] is already declared upstream after #67)
     [$.constant_expression, $._directives],
     [$.constant_expression, $.expression, $._directives],
     [$.expression, $.variable_lvalue, $._directives],
@@ -6255,7 +6262,6 @@ module.exports = grammar({
     // Allow statements in class body (macro-generated code like for loops inside uvm_object_utils_begin)
     [$.class_item, $.statement_item],
     [$.statement],
-
   ],
 
 });

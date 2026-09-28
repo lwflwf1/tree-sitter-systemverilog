@@ -28470,49 +28470,53 @@
       ]
     },
     "expression": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "primary"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_unary_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "inc_or_dec_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_parenthesized_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_binary_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "conditional_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "inside_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "tagged_union_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "text_macro_usage"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "file_or_line_compiler_directive"
-        }
-      ]
+      "type": "PREC",
+      "value": "expression",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "primary"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_unary_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "inc_or_dec_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_parenthesized_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_binary_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "conditional_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "inside_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "tagged_union_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "text_macro_usage"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "file_or_line_compiler_directive"
+          }
+        ]
+      }
     },
     "tagged_union_expression": {
       "type": "PREC_RIGHT",
@@ -34804,6 +34808,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "nounconnected_drive_compiler_directive"
+          },
+          {
+            "type": "SYMBOL",
             "name": "celldefine_compiler_directive"
           },
           {
@@ -34944,7 +34952,7 @@
           "type": "IMMEDIATE_TOKEN",
           "content": {
             "type": "PATTERN",
-            "value": "\\r?\\n"
+            "value": "[ \\t]*\\r?\\n"
           }
         }
       ]
@@ -36930,6 +36938,10 @@
         }
       ]
     },
+    "nounconnected_drive_compiler_directive": {
+      "type": "STRING",
+      "value": "`nounconnected_drive"
+    },
     "celldefine_compiler_directive": {
       "type": "STRING",
       "value": "`celldefine"
@@ -37466,10 +37478,6 @@
       "hierarchical_identifier"
     ],
     [
-      "class_scope",
-      "_method_call_root"
-    ],
-    [
       "_incomplete_class_scoped_type",
       "class_type",
       "tf_call",
@@ -37927,10 +37935,6 @@
     [
       "constraint_block",
       "empty_unpacked_array_concatenation"
-    ],
-    [
-      "expression",
-      "_directives"
     ],
     [
       "constant_expression",
@@ -38904,6 +38908,16 @@
       {
         "type": "STRING",
         "value": "hierarchical_identifier"
+      }
+    ],
+    [
+      {
+        "type": "STRING",
+        "value": "expression"
+      },
+      {
+        "type": "STRING",
+        "value": "_directives"
       }
     ],
     [

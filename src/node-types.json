@@ -2072,6 +2072,10 @@
           "named": true
         },
         {
+          "type": "nounconnected_drive_compiler_directive",
+          "named": true
+        },
+        {
           "type": "parameter_declaration",
           "named": true
         },
@@ -3366,6 +3370,10 @@
           "named": true
         },
         {
+          "type": "nounconnected_drive_compiler_directive",
+          "named": true
+        },
+        {
           "type": "pragma",
           "named": true
         },
@@ -3587,6 +3595,10 @@
         },
         {
           "type": "line_compiler_directive",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -4232,6 +4244,10 @@
         },
         {
           "type": "non_integer_type",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -6215,6 +6231,10 @@
           "named": true
         },
         {
+          "type": "nounconnected_drive_compiler_directive",
+          "named": true
+        },
+        {
           "type": "parameter_declaration",
           "named": true
         },
@@ -6451,6 +6471,10 @@
         },
         {
           "type": "net_declaration",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -7505,6 +7529,10 @@
           "named": true
         },
         {
+          "type": "nounconnected_drive_compiler_directive",
+          "named": true
+        },
+        {
           "type": "parameter_declaration",
           "named": true
         },
@@ -7783,6 +7811,10 @@
         },
         {
           "type": "net_declaration",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -9445,6 +9477,10 @@
           "named": true
         },
         {
+          "type": "nounconnected_drive_compiler_directive",
+          "named": true
+        },
+        {
           "type": "parameter_declaration",
           "named": true
         },
@@ -9739,6 +9775,10 @@
         },
         {
           "type": "net_declaration",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -10325,6 +10365,10 @@
           "named": true
         },
         {
+          "type": "nounconnected_drive_compiler_directive",
+          "named": true
+        },
+        {
           "type": "pragma",
           "named": true
         },
@@ -10405,6 +10449,10 @@
         },
         {
           "type": "line_compiler_directive",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -10521,6 +10569,10 @@
         },
         {
           "type": "line_compiler_directive",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -11331,6 +11383,10 @@
         },
         {
           "type": "net_declaration",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -12360,6 +12416,10 @@
           "named": true
         },
         {
+          "type": "nounconnected_drive_compiler_directive",
+          "named": true
+        },
+        {
           "type": "parameter_declaration",
           "named": true
         },
@@ -12610,6 +12670,10 @@
         },
         {
           "type": "net_declaration",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -14485,6 +14549,10 @@
           "named": true
         },
         {
+          "type": "nounconnected_drive_compiler_directive",
+          "named": true
+        },
+        {
           "type": "package_declaration",
           "named": true
         },
@@ -14935,6 +15003,10 @@
         },
         {
           "type": "nonblocking_assignment",
+          "named": true
+        },
+        {
+          "type": "nounconnected_drive_compiler_directive",
           "named": true
         },
         {
@@ -18175,6 +18247,10 @@
   {
     "type": "notif1",
     "named": false
+  },
+  {
+    "type": "nounconnected_drive_compiler_directive",
+    "named": true
   },
   {
     "type": "ns",
