@@ -8930,10 +8930,6 @@
           "named": true
         },
         {
-          "type": "static_method_call_body",
-          "named": true
-        },
-        {
           "type": "text_macro_usage",
           "named": true
         }
@@ -15106,54 +15102,6 @@
         },
         {
           "type": "statement",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "static_method_call_body",
-    "named": true,
-    "fields": {
-      "arguments": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "list_of_arguments",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "escaped_identifier",
-            "named": true
-          },
-          {
-            "type": "simple_identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "attribute_instance",
           "named": true
         }
       ]

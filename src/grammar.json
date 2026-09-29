@@ -27159,8 +27159,13 @@
               "value": "::"
             },
             {
-              "type": "SYMBOL",
-              "name": "static_method_call_body"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "static_method_call_body"
+              },
+              "named": true,
+              "value": "method_call_body"
             }
           ]
         }
@@ -27616,10 +27621,6 @@
           }
         }
       ]
-    },
-    "hierarchical_variable_identifier": {
-      "type": "SYMBOL",
-      "name": "hierarchical_identifier"
     },
     "identifier_list": {
       "type": "SEQ",
@@ -34206,6 +34207,10 @@
       "name": "hierarchical_identifier"
     },
     "hierarchical_tf_identifier": {
+      "type": "SYMBOL",
+      "name": "hierarchical_identifier"
+    },
+    "hierarchical_variable_identifier": {
       "type": "SYMBOL",
       "name": "hierarchical_identifier"
     },

@@ -3709,9 +3709,11 @@ const rules = {
 
   method_call: $ => choice(
     seq($._method_call_root, '.', $.method_call_body),
-    seq($._method_call_root, '::', $.static_method_call_body)
+    seq($._method_call_root, '::', alias($.static_method_call_body, $.method_call_body)) // Out of LRM
   ),
 
+  // Out of LRM: Added to remove ambiguity between member access and static
+  //             method call by enforcing usage of parenthesis for the latter.
   static_method_call_body: $ => seq(
     field('name', $.method_identifier),
     repeat($.attribute_instance),
@@ -3759,22 +3761,8 @@ const rules = {
 
   variable_identifier_list: $ => commaSep1(choice(
     $.variable_identifier,
-    $.hierarchical_variable_identifier,
+    $.hierarchical_variable_identifier, // Out of LRM: std::randomize() accepts hierarchical variables
   )),
-
-  // Out of LRM: std::randomize() accepts hierarchical variable references with
-  // bit-selects, e.g. std::randomize(top.regs[i].value) (IEEE 1800 18.7 notes
-  // hierarchical names). A bare identifier keeps matching $.variable_identifier
-  // so existing tree shapes and highlight queries are unaffected; this rule only
-  // fires when the argument carries at least one '.' segment or '[' select.
-  hierarchical_variable_identifier: $ => choice(
-    seq($.variable_identifier, $.bit_select),
-    seq(
-      $.variable_identifier,
-      repeat1(seq('.', $._identifier, optional($.bit_select))),
-      optional($.bit_select),
-    ),
-  ),
 
   identifier_list: $ => commaSep1($._identifier),
 
