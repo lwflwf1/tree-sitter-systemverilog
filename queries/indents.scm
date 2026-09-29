@@ -56,7 +56,6 @@
   (tf_call)
   (system_tf_call)
   (method_call_body)
-  (static_method_call_body)
 ] @indent.begin
 
 ; Dedent the ')' that closes such a node (the ')' must be a direct child).
@@ -68,7 +67,6 @@
 (tf_call ")" @indent.branch @indent.end)
 (system_tf_call ")" @indent.branch @indent.end)
 (method_call_body ")" @indent.branch @indent.end)
-(static_method_call_body ")" @indent.branch @indent.end)
 (function_body_declaration ")" @indent.branch @indent.end)
 (task_body_declaration ")" @indent.branch @indent.end)
 (property_declaration ")" @indent.branch @indent.end)
