@@ -2032,6 +2032,10 @@
           "named": true
         },
         {
+          "type": "conditional_statement",
+          "named": true
+        },
+        {
           "type": "constraint_declaration",
           "named": true
         },
@@ -2077,6 +2081,10 @@
         },
         {
           "type": "local_parameter_declaration",
+          "named": true
+        },
+        {
+          "type": "loop_statement",
           "named": true
         },
         {

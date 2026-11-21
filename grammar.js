@@ -827,6 +827,8 @@ const rules = {
       $.class_declaration,
       $.interface_class_declaration,
       $.covergroup_declaration,
+      $.loop_statement,        // Out of LRM: macro-generated for/foreach/... in class body (issue #75)
+      $.conditional_statement, // Out of LRM: macro-generated if in class body (issue #75)
     )),
     $.local_parameter_declaration,
     $.parameter_declaration,
@@ -6272,6 +6274,7 @@ module.exports = grammar({
     [$.expression, $.hierarchical_identifier, $._directives],
     [$._method_call_root, $.hierarchical_identifier, $._directives],
     [$.primary_literal, $._directives],
+
   ],
 
 });

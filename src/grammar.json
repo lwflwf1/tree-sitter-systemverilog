@@ -4230,6 +4230,14 @@
                 {
                   "type": "SYMBOL",
                   "name": "covergroup_declaration"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "loop_statement"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "conditional_statement"
                 }
               ]
             }
