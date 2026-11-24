@@ -367,6 +367,9 @@ port_name: (simple_identifier) @variable
   name: (simple_identifier) @function
   (simple_identifier)? @label)
 
+(task_body_declaration
+  name: (simple_identifier) @function)
+
 (function_body_declaration
   .
   name: (simple_identifier) @function
@@ -459,6 +462,16 @@ port_name: (simple_identifier) @variable
   (method_call_body
     name: (simple_identifier) @function.call
     "("))
+
+(method_call
+  (method_call_body
+    (array_manipulation_call
+      (array_method_name) @function.call)))
+
+(method_call
+  (method_call_body
+    (queue_method_call
+      (queue_method_name) @function.call)))
 
 (tf_call
   (hierarchical_identifier
