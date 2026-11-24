@@ -276,6 +276,9 @@
   (variable_decl_assignment
     name: (simple_identifier) @variable))
 
+(for_variable_declaration
+  (simple_identifier) @variable)
+
 (hierarchical_identifier
   (simple_identifier) @variable
   (#not-has-ancestor? @variable parameter_value_assignment))
