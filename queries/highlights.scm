@@ -564,6 +564,13 @@ c_name: (c_identifier) @function
   (simple_identifier)
   (simple_identifier) @type)
 
+(method_call
+  (primary
+    (hierarchical_identifier
+      (simple_identifier) @type
+      (simple_identifier)
+      ".")))
+
 (param_expression
   (mintypmax_expression
     (expression
