@@ -463,15 +463,19 @@ port_name: (simple_identifier) @variable
     name: (simple_identifier) @function.call
     "("))
 
-(method_call
-  (method_call_body
-    (array_manipulation_call
-      (array_method_name) @function.call)))
+((array_method_name) @function.builtin)
 
-(method_call
-  (method_call_body
-    (queue_method_call
-      (queue_method_name) @function.call)))
+((queue_method_name) @function.builtin)
+
+((array_or_queue_method_name) @function.builtin)
+
+((enum_or_associative_array_method_name) @function.builtin)
+
+((associative_array_method_name) @function.builtin)
+
+((string_method_name) @function.builtin)
+
+((enum_method_name) @function.builtin)
 
 (tf_call
   (hierarchical_identifier
