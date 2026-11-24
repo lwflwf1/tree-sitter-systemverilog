@@ -496,7 +496,7 @@ port_name: (simple_identifier) @variable
 
 ; instance
 (module_instantiation
-  instance_type: (simple_identifier) @constructor)
+  instance_type: (simple_identifier) @type)
 
 (name_of_instance
   instance_name: (simple_identifier) @module)
