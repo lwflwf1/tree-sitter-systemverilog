@@ -289,6 +289,18 @@
   (simple_identifier) @variable
   (#not-has-ancestor? @variable parameter_value_assignment))
 
+((simple_identifier) @variable
+  (#has-ancestor? @variable constant_bit_select))
+
+((simple_identifier) @variable
+  (#has-ancestor? @variable bit_select))
+
+((simple_identifier) @variable
+  (#has-ancestor? @variable indexed_range))
+
+((simple_identifier) @variable
+  (#has-ancestor? @variable constant_indexed_range))
+
 (tf_port_item
   (simple_identifier) @variable)
 
