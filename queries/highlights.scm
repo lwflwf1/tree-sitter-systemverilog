@@ -212,6 +212,7 @@
 [
   "or"
   "and"
+  "dist"
 ] @keyword.operator
 
 [
