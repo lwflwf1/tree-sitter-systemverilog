@@ -216,6 +216,11 @@
 ] @keyword.operator
 
 [
+  ":="
+  ":/"
+] @keyword.operator
+
+[
   "input"
   "output"
   "inout"
