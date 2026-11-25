@@ -378,10 +378,12 @@ port_name: (simple_identifier) @variable
   (simulation_control_task)
   (system_tf_identifier)
   (severity_system_task)
-  (randomize_call)
   (array_or_queue_method_name)
   "new"
 ] @function.builtin
+
+(randomize_call
+  "randomize" @function.builtin)
 
 ; declaration
 (task_body_declaration
