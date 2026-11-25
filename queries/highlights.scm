@@ -230,6 +230,7 @@
   "cover"
   "assume"
   "disable"
+  "soft"
   "automatic"
   "static"
   (dpi_function_import_property)
