@@ -303,10 +303,10 @@
 ((simple_identifier) @variable
   (#has-ancestor? @variable constant_indexed_range))
 
-((simple_identifier) @variable
+((simple_identifier) @variable.parameter
   (#has-ancestor? @variable constant_range))
 
-((simple_identifier) @variable
+((simple_identifier) @variable.parameter
   (#has-ancestor? @variable constant_expression))
 
 (tf_port_item
