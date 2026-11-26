@@ -385,6 +385,10 @@ port_name: (simple_identifier) @variable
 (randomize_call
   "randomize" @function.builtin)
 
+(randomize_call
+  (variable_identifier_list
+    (simple_identifier) @variable))
+
 ; declaration
 (task_body_declaration
   .
