@@ -75,6 +75,7 @@
   "ref"
   "initial"
   "string"
+  "with"
   (unique_priority)
   (bins_keyword)
   (always_keyword)
